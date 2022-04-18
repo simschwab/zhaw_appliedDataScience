@@ -15,3 +15,16 @@ https://azure.microsoft.com/de-de/services/databricks/
 Azure Machine Learning: Deployment of the service   
 https://azure.microsoft.com/de-de/services/machine-learning/#product-overview
 
+## Structure of the repository
+### Collect Data
+01_GetDataFromAPI  
+01_Scrape
+### Prepare Data
+02_  
+02_
+### Modeling
+
+### Analyze
+
+
+
