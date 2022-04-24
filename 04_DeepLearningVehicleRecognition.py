@@ -3,11 +3,6 @@
 
 # COMMAND ----------
 
-#installing tensorflow
-#!pip install tensorflow
-
-# COMMAND ----------
-
 # Folder in which the pictures are stored
 mountmap="100vehiclessmall"
 
@@ -26,6 +21,10 @@ import tensorflow as tf
 import numpy as np
 import os
 from PIL import Image
+
+# COMMAND ----------
+
+# MAGIC %md <h5>1. Load data from storage</h5>
 
 # COMMAND ----------
 
@@ -81,6 +80,10 @@ data_train_picture, data_train_label, data_test_picture, data_test_label = load_
 
 # COMMAND ----------
 
+# MAGIC %md <h5>2. Define training and test set</h5>
+
+# COMMAND ----------
+
 # The data, shuffled and split between train and test sets:
 x_train = np.asarray(data_train_picture)
 y_train = np.asarray(data_train_label)
@@ -98,7 +101,11 @@ print(y_test)
 
 # COMMAND ----------
 
-#1b. Initial Model Training ParametersParameter Setup
+# MAGIC %md <h5>3. Define model</h5>
+
+# COMMAND ----------
+
+#3a. Initial Model Training ParametersParameter Setup
 
 batch_size = 32
 num_classes = 10
@@ -106,7 +113,10 @@ epochs = 30
 
 # COMMAND ----------
 
-#1c. Preprocessing Steps
+# MAGIC %md 3.1 Preprocessing
+
+# COMMAND ----------
+
 #1. Convert class vectors to binary class matrices
 #2. Cast PIXEL Values to FLOAT
 #3. Normalize Pixel RGB Values to (0:1)
@@ -127,9 +137,7 @@ print(y_test)
 
 # COMMAND ----------
 
-# COMMAND ----------
-
-# MAGIC %md ##### 1d. Define Convolution Network
+# MAGIC %md 3.2 Define Convolutional Network
 
 # COMMAND ----------
 
@@ -175,22 +183,7 @@ model.summary()
 
 # COMMAND ----------
 
-# COMMAND ----------
-
-# MAGIC %md ##### 1e. Define Optimizers and Compile the model
-# MAGIC 
-# MAGIC **Optimization algorithms** are used to minimize (or maximize) an Objective function (also called Error function) E(x) which is mathematical function dependent on the Model’s internal learnable parameters that are used in computing the target values(Y) from the set of predictors(X) used by the machine learning model. In neural networks the Weights(W) and the Bias(b) values are the learnable parameters which are used in computing the output values and are learned and updated in the direction of best solution i.e minimizing the Loss by the network’s training process.
-# MAGIC 
-# MAGIC Below are som of the most used optimizers available in Keras:
-# MAGIC 1. Stochastic Gradient Descent (SGD)
-# MAGIC 2. Root Mean Square Propagation (RMSProp)
-# MAGIC 3. Adaptive Gradient (ADAGrad)
-# MAGIC 4. Adaptive Moment Estimation (ADAM)
-# MAGIC   
-# MAGIC **Hyper Parameters**
-# MAGIC   Two hyper parameters used by most optimizers are:
-# MAGIC   1. Learning Rate - Learning rate (lr) controls the magnitude of adjustment of the weights of the neural network with respect the loss gradient.
-# MAGIC   2. Decay - Weight decay is a regularization term that causes weights to exponentially decay to zero and hence penalizes big weights.
+# MAGIC %md 3.3 Define Optimizers and Compile the model
 
 # COMMAND ----------
 
@@ -198,19 +191,16 @@ model.summary()
 from tensorflow.keras import optimizers
 import tensorflow as tf
 
-
 opt = tf.keras.optimizers.RMSprop(lr=0.0001, decay=1e-6)
 
-# Let's train the model using RMSprop
+# train the model using RMSprop
 model.compile(loss='categorical_crossentropy',
               optimizer=opt,
               metrics=['accuracy'])
 
 # COMMAND ----------
 
-# COMMAND ----------
-
-# MAGIC %md ##### 1f.  Model Training : without Data Augmentation (Takes 1 Min)
+# MAGIC %md 3.4 Model training
 
 # COMMAND ----------
 
@@ -227,17 +217,15 @@ model.fit(x_train, y_train,
 
 # COMMAND ----------
 
-# COMMAND ----------
-
-# MAGIC %md ##### 1g. Evaluate model
+# MAGIC %md 3.5 Model evaluation
 
 # COMMAND ----------
+
+# Evaluate model
 
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test accuracy:', score[1])
 print('Test loss:', score[0])
-
-# COMMAND ----------
 
 # COMMAND ----------
 
@@ -270,23 +258,19 @@ def plotmetrics(history):
 
 # COMMAND ----------
 
-# COMMAND ----------
-
 # Visualize model
 pltoutput = plotmetrics(history_noAug)
 display(pltoutput)
 
 # COMMAND ----------
 
-# MAGIC %md ##### 1h. Show predictions in plot
+#Show predictions in plot
 
 # COMMAND ----------
 
-#model.save(r'C:\Users\mario\OneDrive\Desktop\model_smallpictures_100.h5')
+# MAGIC %md 3.6 Save the trained model to DBFS
 
 # COMMAND ----------
-
-#1i. Save Trained Model (without Data Augmentation) to DBFS as HDF5 file
 
 ## Create Output Model Directory
 dbutils.fs.mkdirs('/vehicles/models/')
@@ -301,6 +285,12 @@ display(dbutils.fs.ls("/tmp/vehicles_100.h5"))
 
 # COMMAND ----------
 
+# MAGIC %md <h5>4. Model testing</h5>
+
+# COMMAND ----------
+
+# MAGIC %md 4.1 Reload the proviously saved model
+
 # COMMAND ----------
 
 from keras.models import load_model
@@ -311,15 +301,16 @@ model = load_model(modelpath)
 
 # COMMAND ----------
 
-# COMMAND ----------
-
 pltoutput = plotmetrics(history_noAug)
 display(pltoutput)
 
 
 # COMMAND ----------
 
-#2h. Show predictions in plot
+# MAGIC %md 4.2 Show the predictions in plot
+
+# COMMAND ----------
+
 
 categoriesList=['ambulance', 'bicycle', 'bus', 'car', 'limousine', 'motorcycle', 'tank', 'taxi', 'truck', 'van']
 #categoriesList = np.array(categoriesList)
