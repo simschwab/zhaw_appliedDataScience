@@ -3,14 +3,7 @@
 
 # COMMAND ----------
 
-# 1. Mount blob storage
-# 2. Unzip pictures in storage account
-# 3. List and show pictures
-
-
-# COMMAND ----------
-
-# MAGIC %md Set parameters
+# MAGIC %md <h5>Set parameters</h5>
 
 # COMMAND ----------
 
@@ -24,7 +17,9 @@ mountname = "100vehiclessmall"
 
 # COMMAND ----------
 
-#1. Mount blob storage
+# MAGIC %md <h5>1. Mount blob storage</h5>
+
+# COMMAND ----------
 
 if any(mount.mountPoint == "/mnt/" + mountname for mount in dbutils.fs.mounts()):
   print ("directory " + "/mnt/" + mountname + " is already mounted")
@@ -34,6 +29,10 @@ else:
   source = "wasbs://" + containername + "@" + storageaccount + ".blob.core.windows.net",
   mount_point = "/mnt/" + mountname,
   extra_configs = {"fs.azure.account.key." + storageaccount +".blob.core.windows.net":account_key})
+
+# COMMAND ----------
+
+# MAGIC %md <h5>2. Unzip pictures in storage account</h5>
 
 # COMMAND ----------
 
@@ -52,6 +51,10 @@ zip_ref = zipfile.ZipFile(datafile_dbfs, 'r')
 zip_ref.extractall("/dbfs/mnt/" + mountname)
 zip_ref.close()
 
+
+# COMMAND ----------
+
+# MAGIC %md  <h5>3. List and show pictures</h5>
 
 # COMMAND ----------
 
@@ -86,6 +89,3 @@ def plotImagesMount(n_images=8):
     return plot
   
 display(plotImagesMount(n_images=5))
-
-# COMMAND ----------
-
