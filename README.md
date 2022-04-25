@@ -18,13 +18,16 @@ https://azure.microsoft.com/de-de/services/machine-learning/#product-overview
 ## Structure of the repository
 ### Collect Data
 01_GetDataFromAPI  
-01_Scrape
+01_ScrapeDataFromWebsite
 ### Prepare Data
-02_  
-02_
+02_1_Rename  
+02_2_FindOptimalImageSizeForCNN
+### Storage in Azure
+03_Vehicle_Mount_Storage_Account
 ### Modeling
-
+04_DeepLearningVehicleRecognition
 ### Analyze
-
+05_Vehicles_Register_Model_and_log_metrics
+06_Vehicle_create_an_HTTP_endpoint
 
 
