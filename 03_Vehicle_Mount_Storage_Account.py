@@ -11,9 +11,9 @@ storageaccount="zhawadsstorage"
 
 account_key="BEPIWVQrb1Iw4rwPDe9oyzuwwF4MtTFL/uvmrMqPPD7T7jgi5s0dr8W5axdT3LlP4mCFwLOBLKo3+AStKTvmSw=="
 
-containername="vehicles100"
+containername="vehicles"
 #mountname=containername
-mountname = "100vehiclessmall"
+mountname = "vehiclessmall"
 
 # COMMAND ----------
 
@@ -41,9 +41,8 @@ else:
 import zipfile
 import os
 
-#datafile = "vehicledata.zip"
-#with 100 pictures per categorie
-datafile = "trainingdata100.zip"
+
+datafile = "vehicles.zip"
 
 datafile_dbfs = os.path.join("/dbfs/mnt/" + mountname, datafile)
 
@@ -72,7 +71,7 @@ def plotImagesMount(n_images=8):
     axes = axes.flatten()
     
     for i in range(n_images * n_images):
-        rand1 = random.randint(0, 6)
+        rand1 = random.randint(0, 5)
         rand2 = random.randint(1020, 1030)
         filename=str(categoriesList[rand1]) + "_" + str(rand2)
         filenamejpg=filename + ".jpg"
