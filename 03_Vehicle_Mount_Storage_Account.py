@@ -10,7 +10,6 @@
 import config
 
 storageaccount = config.azure_storageaccount
-
 account_key= config.azure_account_key
 
 containername="vehicles"
