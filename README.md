@@ -1,4 +1,4 @@
-# zhaw_appliedDataScience
+# Appled Data Science @ZHAW
   
 Case: Recognize vehicle types for automatic toll classification
 ## Structure of the repository
