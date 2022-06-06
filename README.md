@@ -16,7 +16,7 @@ Case: Recognize vehicle types for automatic toll classification
 05_Vehicles_Register_Model_and_log_metrics  
 06_Vehicle_create_an_HTTP_endpoint
 ## Architecture Overview
-
+![Alt text](/Solution%20Design/architecture.png)
 
 ## Tech-Stack
 
