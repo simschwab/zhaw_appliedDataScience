@@ -3,16 +3,16 @@
 
 # COMMAND ----------
 
-# MAGIC %md <h5>Set parameters</h5>
+# MAGIC %md <h5>0. Set parameters</h5>
 
 # COMMAND ----------
 
-import config
+storageaccount="zhawadsstorage"
 
-storageaccount = config.azure_storageaccount
-account_key= config.azure_account_key
+account_key="BEPIWVQrb1Iw4rwPDe9oyzuwwF4MtTFL/uvmrMqPPD7T7jgi5s0dr8W5axdT3LlP4mCFwLOBLKo3+AStKTvmSw=="
 
 containername="vehicles"
+#mountname=containername
 mountname = "vehiclessmall"
 
 # COMMAND ----------
