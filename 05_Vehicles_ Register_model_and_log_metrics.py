@@ -1,30 +1,11 @@
 # Databricks notebook source
-# MAGIC %md Azure ML & Azure Databricks notebooks by René Bremer (original taken from Parashar Shah)
-# MAGIC 
-# MAGIC Copyright (c) Microsoft Corporation. All rights reserved.
-# MAGIC 
-# MAGIC Licensed under the MIT License.
+# MAGIC %md ##0. Set parameters
 
 # COMMAND ----------
 
-# MAGIC %md ##### In this notebook the following steps will be excuted:
-# MAGIC 
-# MAGIC 1. Log metrics of models that was trained on 2000 pictures and all 60000 pictures
-# MAGIC 2. Register best model (trained with 60000 pictures)
-# MAGIC 
-# MAGIC Make sure you added libraries to azureml-sdk[databricks], Keras and TensorFlow to your cluster.
-
-# COMMAND ----------
-
-# MAGIC %md #0. Set parameters
-
-# COMMAND ----------
-
-import config
-
-workspace = config.azure_workspace
-resource_grp = config.azure_resource_grp
-subscription_id = config.azure_subscription_id
+workspace="zhawadsMachineLearning"
+resource_grp="zhaw_AppliedDataScience"
+subscription_id="9d766322-e0aa-4e0d-9225-aa934bcc1b4a"
 
 
 
@@ -38,11 +19,11 @@ par_experiment_name = 'vehiclesrecognition'
 
 # COMMAND ----------
 
-# MAGIC %md #1.  Log metrics of models
+# MAGIC %md ##1.  Log metrics of models
 
 # COMMAND ----------
 
-# MAGIC %md ##### 1a. Authenticate to Azure ML workspace (interactive, using AAD and browser)
+# MAGIC %md ##### 1a. Authenticate to Azure ML workspace
 
 # COMMAND ----------
 
@@ -69,7 +50,7 @@ ws.get_details()
 
 # COMMAND ----------
 
-# MAGIC %md ##### 1b. Load models from disk where it was stored in previous notebook 1_DeepLearningCifar!0NotebookExploration.py
+# MAGIC %md ##### 1b. Load models from disk where it was stored
 
 # COMMAND ----------
 
@@ -89,7 +70,7 @@ model.summary()
 
 # COMMAND ----------
 
-# MAGIC %md ##### 2c. Get testdata to regenerate metrics
+# MAGIC %md ##### 1c. Get testdata to regenerate metrics
 
 # COMMAND ----------
 
@@ -116,27 +97,15 @@ x_test /= 255
 
 # COMMAND ----------
 
-# MAGIC %md ##### 2d. Create new experiment in Azure ML service workspace and add both models
+# MAGIC %md ##### 1d. Create new experiment in Azure ML service workspace
 
 # COMMAND ----------
 
-# upload the serialized model into run history record
-#mdl, ext = par_model_name.split(".")
-#model_zip = mdl + ".zip"
-#shutil.make_archive('/dbfs/'+ mdl, 'zip', path)
 # start a training run by defining an experiment
 myexperiment = Experiment(ws, par_experiment_name)
 run = myexperiment.start_logging()
 run = myexperiment
 
-#score = model.evaluate(x_test, y_test, verbose=0)
-#scoreall = modelall.evaluate(x_test, y_test, verbose=0)
-
-#run.log_list("Test accuracy 2000 pics, all pics", [score2000[1], scoreall[1]])
-#run.log_list("Test loss 2000 pics, all pics", [score2000[0], scoreall[0]])
-
-#run.upload_file("outputs/" + par_model2000_name, model2000path)
-#run.upload_file("outputs/" + par_modelall_name, modelallpath)
 
 #run.complete()
 run_id = run.id
@@ -144,7 +113,7 @@ print ("run id:", run_id)
 
 # COMMAND ----------
 
-# MAGIC %md #2. Register best model (trained with 60000 pictures)
+# MAGIC %md ##2. Register the model
 
 # COMMAND ----------
 
