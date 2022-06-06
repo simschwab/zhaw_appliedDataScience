@@ -19,10 +19,11 @@
 
 # COMMAND ----------
 
-workspace="zhawadsMachineLearning"
-resource_grp="zhaw_AppliedDataScience"
-subscription_id="9d766322-e0aa-4e0d-9225-aa934bcc1b4a"
+import config
 
+workspace = config.azure_workspace
+resource_grp = config.azure_resource_grp
+subscription_id = config.azure_subscription_id
 
 par_model_name = 'vehicles_100.h5' 
 par_service_name = 'vehicles'
